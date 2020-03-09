@@ -23,6 +23,10 @@ abstract class IPLAdapter {
                 StreamSupport.stream(stateCodeCSV.spliterator(),false)
                         .map(BatsmanCSV.class::cast)
                         .forEach(code->iplMap.put(code.playerName,new CricketLeagueDTO(code)));}
+            if(className.getName().equals("BowlerCSV")){
+                StreamSupport.stream(stateCodeCSV.spliterator(),false)
+                        .map(BowlerCSV.class::cast)
+                        .forEach(code->iplMap.put(code.playerNameBow,new CricketLeagueDTO(code)));}
             return iplMap;
         } catch (IOException e) {
             throw new CricketLeagueAnalyserException(e.getMessage(),

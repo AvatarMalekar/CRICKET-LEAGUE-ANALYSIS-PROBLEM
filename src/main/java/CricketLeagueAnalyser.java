@@ -25,8 +25,9 @@ public class CricketLeagueAnalyser<E> {
         Comparator<CricketLeagueDTO> comparator=Comparator.comparing(batmanCSV->batmanCSV.battingAverage);
         this.mapOfSortValues.put(RecordSort.AVERAGE_WITH_STRIKE_RATE,comparator.thenComparing(BatsmanCSV->BatsmanCSV.strikeRate));
         Comparator<CricketLeagueDTO> comparatorOfRuns=Comparator.comparing(batmanCSV->batmanCSV.runs);
-        this.mapOfSortValues.put(RecordSort.RUNS_AND_AVERAGE,comparator.thenComparing(BatsmanCSV->BatsmanCSV.battingAverage));
+        this.mapOfSortValues.put(RecordSort.RUNS_AND_AVERAGE,comparatorOfRuns.thenComparing(BatsmanCSV->BatsmanCSV.battingAverage));
 
+        this.mapOfSortValues.put(RecordSort.AVERAGE,Comparator.comparing(batmanCSV->batmanCSV.bowlingAverage));
 
     }
 
