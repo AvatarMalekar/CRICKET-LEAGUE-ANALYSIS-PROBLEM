@@ -20,8 +20,8 @@ public class CricketLeagueAnalyser<E> {
         mapOfSortValues=new HashMap<>();
         this.mapOfSortValues.put(RecordSort.AVERAGE,Comparator.comparing(batmanCSV->batmanCSV.battingAverage));
         this.mapOfSortValues.put(RecordSort.STRIKE_RATE,Comparator.comparing(batmanCSV->batmanCSV.strikeRate));
-        this.mapOfSortValues.put(RecordSort.FOUR_SIX_COUNT,Comparator.comparing(batmanCSV->batmanCSV.sixAndFourCount));
-        this.mapOfSortValues.put(RecordSort.FOUR_SIX_COUNT_WITH_AVERAGE,Comparator.comparing(batmanCSV->batmanCSV.fourSixCountAndAverage));
+        this.mapOfSortValues.put(RecordSort.FOUR_SIX_COUNT, Comparator.comparing(batmanCSV -> batmanCSV.sixCount + batmanCSV.fourCount));
+        this.mapOfSortValues.put(RecordSort.FOUR_SIX_COUNT_WITH_AVERAGE,new ComparatorSorting().thenComparing(batmanCSV->batmanCSV.battingAverage));
     }
 
     public int loadIPLData(RecordType batting, String csvFilePath) {
