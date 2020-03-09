@@ -1,19 +1,21 @@
 import com.opencsv.bean.CsvBindByName;
 
 public class BatsmanCSV {
-
+    //POS,PLAYER,Mat,Inns,NO,Runs,HS,Avg,BF,SR,100,50,4s,6s
     @CsvBindByName(column = "Avg", required = true)
-    public String battingAverage;
+    public double battingAverage;
 
     @CsvBindByName(column = "SR", required = true)
     public double strikeRate;
-
 
     @CsvBindByName(column = "4s", required = true)
     public int fourCount;
 
     @CsvBindByName(column = "6s", required = true)
-    public double sixCount;
+    public int sixCount;
+
+    @CsvBindByName(column = "PLAYER", required = true)
+    public String playerName;
 
     @Override
     public String toString() {
@@ -22,6 +24,7 @@ public class BatsmanCSV {
                 ", SR='" + strikeRate + '\'' +
                 ", 4s='" + fourCount + '\'' +
                 ", 6s='" + sixCount + '\'' +
+                ", PLAYER='" + playerName + '\'' +
                 '}';
     }
 }
