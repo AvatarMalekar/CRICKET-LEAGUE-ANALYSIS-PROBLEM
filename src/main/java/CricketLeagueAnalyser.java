@@ -8,7 +8,7 @@ public class CricketLeagueAnalyser<E> {
         BATTING,BOWLING;
     }
     public enum RecordSort{
-        AVERAGE,STRIKE_RATE,FOUR,SIX,PLAYER_NAME;
+        AVERAGE,STRIKE_RATE,FOUR,SIX,PLAYER_NAME,FOUR_SIX_COUNT;
     }
     List<CricketLeagueDTO> iplList;
     Map<String,CricketLeagueDTO> iplMap=null;
@@ -20,6 +20,7 @@ public class CricketLeagueAnalyser<E> {
         mapOfSortValues=new HashMap<>();
         this.mapOfSortValues.put(RecordSort.AVERAGE,Comparator.comparing(batmanCSV->batmanCSV.battingAverage));
         this.mapOfSortValues.put(RecordSort.STRIKE_RATE,Comparator.comparing(batmanCSV->batmanCSV.strikeRate));
+        this.mapOfSortValues.put(RecordSort.FOUR_SIX_COUNT,Comparator.comparing(batmanCSV->batmanCSV.sixAndFourCount));
     }
 
     public int loadIPLData(RecordType batting, String csvFilePath) {
@@ -48,20 +49,6 @@ public class CricketLeagueAnalyser<E> {
         this.sort(iplCSVComparator);
         String json=new Gson().toJson(iplList);
         return json;
-    }
-
-    public String getPlayerWithMaximumFourAndSix(){
-        int max=0;
-        int count=0;
-        String name="";
-        for (int i=0;i<iplList.size();i++) {
-            count=iplList.get(i).fourCount+iplList.get(i).sixCount;
-            if(count>max){
-                max=count;
-                name=iplList.get(i).playerName;
-            }
-        }
-        return name;
     }
 
 }

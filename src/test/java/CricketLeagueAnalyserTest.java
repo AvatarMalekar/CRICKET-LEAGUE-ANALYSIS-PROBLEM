@@ -23,10 +23,11 @@ public class CricketLeagueAnalyserTest {
     }
 
     @Test
-    public void givenIPLRecordData_WhenSortedOnBasisOfFOurSixCount_ShouldReturn_PlayerName() {
+    public void name() {
         CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
         cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH);
-        String playerWithMaximumFourAndSix = cricketLeagueAnalyser.getPlayerWithMaximumFourAndSix();
-        Assert.assertEquals("Andre Russell",playerWithMaximumFourAndSix);
+        String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.FOUR_SIX_COUNT);
+        BatsmanCSV[] censusCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
+        Assert.assertEquals("Andre Russell",censusCsv[censusCsv.length-1].playerName);
     }
 }
