@@ -19,7 +19,7 @@ public class CricketLeagueAnalyserTest {
         cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH);
         String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.STRIKE_RATE);
         BatsmanCSV[] censusCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
-        Assert.assertEquals(333.33,censusCsv[censusCsv.length-1].strikeRate,0.00);
+        Assert.assertEquals("Ishant Sharma",censusCsv[censusCsv.length-1].playerName);
     }
 
     @Test
@@ -38,5 +38,14 @@ public class CricketLeagueAnalyserTest {
         String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.FOUR_SIX_COUNT_WITH_AVERAGE);
         BatsmanCSV[] censusCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
         Assert.assertEquals("Andre Russell",censusCsv[censusCsv.length-1].playerName);
+    }
+
+    @Test
+    public void givenIPLRecordData_WhenSortedOnBasisOfAverageStrikeRate_ShouldReturn_PlayerName() {
+        CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
+        cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH);
+        String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.AVERAGE_WITH_STRIKE_RATE);
+        BatsmanCSV[] censusCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
+        Assert.assertEquals("MS Dhoni",censusCsv[censusCsv.length-1].playerName);
     }
 }
