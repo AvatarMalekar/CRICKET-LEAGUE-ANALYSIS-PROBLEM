@@ -23,10 +23,19 @@ public class CricketLeagueAnalyserTest {
     }
 
     @Test
-    public void name() {
+    public void givenIPLRecordData_WhenSortedOnBasisOfFOurSixCount_ShouldReturn_PlayerName() {
         CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
         cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH);
         String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.FOUR_SIX_COUNT);
+        BatsmanCSV[] censusCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
+        Assert.assertEquals("Andre Russell",censusCsv[censusCsv.length-1].playerName);
+    }
+
+    @Test
+    public void givenIPLRecordData_WhenSortedOnBasisOfFOurSixCountAndStrikeRate_ShouldReturn_PlayerName() {
+        CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
+        cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH);
+        String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.FOUR_SIX_COUNT_WITH_AVERAGE);
         BatsmanCSV[] censusCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
         Assert.assertEquals("Andre Russell",censusCsv[censusCsv.length-1].playerName);
     }

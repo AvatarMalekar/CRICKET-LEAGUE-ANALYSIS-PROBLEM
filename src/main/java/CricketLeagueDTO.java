@@ -5,6 +5,7 @@ public class CricketLeagueDTO {
     public int sixCount;
     public String playerName;
     public int sixAndFourCount;
+    public double fourSixCountAndAverage;
 
 
     public CricketLeagueDTO(BatsmanCSV csvObj) {
@@ -14,6 +15,7 @@ public class CricketLeagueDTO {
         this.sixCount =  csvObj.sixCount;
         this.playerName =  csvObj.playerName;
         this.sixAndFourCount=csvObj.fourCount+csvObj.sixCount;
+        this.fourSixCountAndAverage=csvObj.fourCount+csvObj.sixCount;
 
     }
 }
