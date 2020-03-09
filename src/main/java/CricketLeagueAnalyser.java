@@ -19,6 +19,7 @@ public class CricketLeagueAnalyser<E> {
         iplMap=new HashMap<>();
         mapOfSortValues=new HashMap<>();
         this.mapOfSortValues.put(RecordSort.AVERAGE,Comparator.comparing(batmanCSV->batmanCSV.battingAverage));
+        this.mapOfSortValues.put(RecordSort.STRIKE_RATE,Comparator.comparing(batmanCSV->batmanCSV.strikeRate));
     }
 
     public int loadIPLData(RecordType batting, String csvFilePath) {
@@ -40,13 +41,27 @@ public class CricketLeagueAnalyser<E> {
         }
     }
 
-    public String getSortedIPLData(RecordSort density) {
+    public String getSortedIPLData(RecordSort onBasisOf) {
         if(iplMap.size()==0 || iplList==null){
             throw new CricketLeagueAnalyserException(CricketLeagueAnalyserException.ExceptionType.NO_IPL_DATA); }
-        Comparator<CricketLeagueDTO> iplCSVComparator=this.mapOfSortValues.get(density);
+        Comparator<CricketLeagueDTO> iplCSVComparator=this.mapOfSortValues.get(onBasisOf);
         this.sort(iplCSVComparator);
         String json=new Gson().toJson(iplList);
         return json;
+    }
+
+    public String getPlayerWithMaximumFourAndSix(){
+        int max=0;
+        int count=0;
+        String name="";
+        for (int i=0;i<iplList.size();i++) {
+            count=iplList.get(i).fourCount+iplList.get(i).sixCount;
+            if(count>max){
+                max=count;
+                name=iplList.get(i).playerName;
+            }
+        }
+        return name;
     }
 
 }

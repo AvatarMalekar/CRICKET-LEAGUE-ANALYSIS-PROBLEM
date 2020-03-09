@@ -12,4 +12,21 @@ public class CricketLeagueAnalyserTest {
         BatsmanCSV[] censusCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
         Assert.assertEquals(83.2,censusCsv[censusCsv.length-1].battingAverage,0.00);
     }
+
+    @Test
+    public void givenIPLRecordData_WhenSortedOnStrikeRate_ShouldReturnSortedResult() {
+        CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
+        cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH);
+        String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.STRIKE_RATE);
+        BatsmanCSV[] censusCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
+        Assert.assertEquals(333.33,censusCsv[censusCsv.length-1].strikeRate,0.00);
+    }
+
+    @Test
+    public void givenIPLRecordData_WhenSortedOnBasisOfFOurSixCount_ShouldReturn_PlayerName() {
+        CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
+        cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH);
+        String playerWithMaximumFourAndSix = cricketLeagueAnalyser.getPlayerWithMaximumFourAndSix();
+        Assert.assertEquals("Andre Russell",playerWithMaximumFourAndSix);
+    }
 }
