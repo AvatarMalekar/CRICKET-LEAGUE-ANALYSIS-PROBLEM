@@ -8,7 +8,7 @@ public class CricketLeagueAnalyser<E> {
         BATTING,BOWLING;
     }
     public enum RecordSort{
-        AVERAGE,STRIKE_RATE,FOUR,SIX,PLAYER_NAME,FOUR_SIX_COUNT,FOUR_SIX_COUNT_WITH_AVERAGE,AVERAGE_WITH_STRIKE_RATE;
+        AVERAGE,STRIKE_RATE,FOUR,SIX,PLAYER_NAME,FOUR_SIX_COUNT,FOUR_SIX_COUNT_WITH_AVERAGE,AVERAGE_WITH_STRIKE_RATE,RUNS_AND_AVERAGE;
     }
     List<CricketLeagueDTO> iplList;
     Map<String,CricketLeagueDTO> iplMap=null;
@@ -24,6 +24,10 @@ public class CricketLeagueAnalyser<E> {
         this.mapOfSortValues.put(RecordSort.FOUR_SIX_COUNT_WITH_AVERAGE,new ComparatorSorting().thenComparing(batmanCSV->batmanCSV.battingAverage));
         Comparator<CricketLeagueDTO> comparator=Comparator.comparing(batmanCSV->batmanCSV.battingAverage);
         this.mapOfSortValues.put(RecordSort.AVERAGE_WITH_STRIKE_RATE,comparator.thenComparing(BatsmanCSV->BatsmanCSV.strikeRate));
+        Comparator<CricketLeagueDTO> comparatorOfRuns=Comparator.comparing(batmanCSV->batmanCSV.runs);
+        this.mapOfSortValues.put(RecordSort.RUNS_AND_AVERAGE,comparator.thenComparing(BatsmanCSV->BatsmanCSV.battingAverage));
+
+
     }
 
     public int loadIPLData(RecordType batting, String csvFilePath) {

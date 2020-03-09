@@ -48,4 +48,13 @@ public class CricketLeagueAnalyserTest {
         BatsmanCSV[] censusCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
         Assert.assertEquals("MS Dhoni",censusCsv[censusCsv.length-1].playerName);
     }
+
+    @Test
+    public void givenIPLRecordData_WhenSortedOnBasisOfAverageAndMaxRuns_ShouldReturn_PlayerName() {
+        CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
+        cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH);
+        String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.RUNS_AND_AVERAGE);
+        BatsmanCSV[] censusCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
+        Assert.assertEquals("MS Dhoni",censusCsv[censusCsv.length-1].playerName);
+    }
 }

@@ -17,6 +17,8 @@ public class BatsmanCSV {
     @CsvBindByName(column = "PLAYER", required = true)
     public String playerName;
 
+    @CsvBindByName(column = "Runs", required = true)
+    public int runs;
     @Override
     public String toString() {
         return "BatsmanCSV{" +
@@ -25,6 +27,7 @@ public class BatsmanCSV {
                 ", 4s='" + fourCount + '\'' +
                 ", 6s='" + sixCount + '\'' +
                 ", PLAYER='" + playerName + '\'' +
+                ", Runs='" + runs + '\'' +
                 '}';
     }
 }
