@@ -112,4 +112,13 @@ public class CricketLeagueAnalyserTest {
         BowlerCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BowlerCSV[].class);
         Assert.assertEquals("Imran Tahir",iplCsv[iplCsv.length-1].playerNameBow);
     }
+
+    @Test
+    public void givenIPLbowling_And_Batting_RecordData_WhenSortedOnBasisOfBattingAndBowlingAverage_ShouldReturnPlayerName() {
+        CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
+        cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH,BOWLER_CSV_FILE_PATH);
+        String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.BEST_AVERAGE_ALLROUNDER);
+        BatsmanCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
+        Assert.assertEquals("Marcus Stoinis",iplCsv[iplCsv.length-1].playerName);
+    }
 }
