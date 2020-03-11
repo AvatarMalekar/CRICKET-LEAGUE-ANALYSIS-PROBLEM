@@ -94,4 +94,13 @@ public class CricketLeagueAnalyserTest {
         BowlerCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BowlerCSV[].class);
         Assert.assertEquals("Krishnappa Gowtham",iplCsv[iplCsv.length-1].playerNameBow);
     }
+
+    @Test
+    public void givenIPLRBowlingRecordData_WhenSortedOnBasisOfAvaerageAndStrikeRate_ShouldReturn_PlayerName() {
+        CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
+        cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BOWLING,BOWLER_CSV_FILE_PATH);
+        String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.AVERAGE_WITH_STRIKE_OF_BOWLERS);
+        BowlerCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BowlerCSV[].class);
+        Assert.assertEquals("Krishnappa Gowtham",iplCsv[iplCsv.length-1].playerNameBow);
+    }
 }
