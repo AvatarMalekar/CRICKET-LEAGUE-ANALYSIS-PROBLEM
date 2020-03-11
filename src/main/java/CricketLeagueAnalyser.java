@@ -62,7 +62,6 @@ public class CricketLeagueAnalyser<E> {
         String json=new Gson().toJson(iplList);
         return json;
     }
-
 }
 
 
