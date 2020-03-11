@@ -1,15 +1,45 @@
+import censusanalyser.CSVBuilderFactory;
+import censusanalyser.ICSVBuilder;
+import com.opencsv.bean.CsvToBean;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.StreamSupport;
 
 public class BatmanIPLAdapter extends IPLAdapter{
 
     @Override
-    Map<String,CricketLeagueDTO> loadIPLData(String... csvFilePath) {
+    public Map<String,CricketLeagueDTO> loadIPLData(String... csvFilePath) {
         Map<String,CricketLeagueDTO> iplMap=new HashMap<>();
         iplMap=super.loadIPLData(BatsmanCSV.class,csvFilePath[0]);
         if(csvFilePath.length==1)
             return iplMap;
-        return null;
+        return this.loadIPLData(iplMap,csvFilePath[1]);
+    }
+    private Map<String, CricketLeagueDTO> loadIPLData(Map<String, CricketLeagueDTO> iplMap, String path) {
+        CsvToBean<CricketLeagueDTO> csvToBean;
+        try(Reader reader = Files.newBufferedReader(Paths.get(path));) {
+            ICSVBuilder icsvBuilder= CSVBuilderFactory.createBuilder();
+            Iterator<BowlerCSV> codeIterator=icsvBuilder.getCSVIterator(reader,BowlerCSV.class);
+            Iterable<BowlerCSV> iplNameCSV= ()-> codeIterator;
+            StreamSupport.stream(iplNameCSV.spliterator(),false)
+                    .filter(iplNameCsv -> iplMap.get(iplNameCsv)!=null)
+                    .forEach(code-> iplMap.get(code).playerName=code.playerNameBow);
+            return iplMap;
+
+        } catch (IOException e) {
+            throw new CricketLeagueAnalyserException(e.getMessage(),
+                    CricketLeagueAnalyserException.ExceptionType.IPL_FILE_PROBLEM);
+        }
+        catch (IllegalStateException e) {
+            throw new CricketLeagueAnalyserException(e.getMessage(),
+                    CricketLeagueAnalyserException.ExceptionType.UNABLE_TO_PARSE);
+        }
     }
     }
 

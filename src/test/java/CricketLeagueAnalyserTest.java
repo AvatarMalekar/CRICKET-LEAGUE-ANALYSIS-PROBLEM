@@ -92,7 +92,7 @@ public class CricketLeagueAnalyserTest {
         cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BOWLING,BOWLER_CSV_FILE_PATH);
         String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.STRIKE_RATE_WITH_FOUR_FIVE_WICKETS);
         BowlerCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BowlerCSV[].class);
-        Assert.assertEquals("Krishnappa Gowtham",iplCsv[iplCsv.length-1].playerNameBow);
+        Assert.assertEquals("Lasith Malinga",iplCsv[iplCsv.length-1].playerNameBow);
     }
 
     @Test
@@ -110,6 +110,6 @@ public class CricketLeagueAnalyserTest {
         cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BOWLING,BOWLER_CSV_FILE_PATH);
         String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.MOST_WICKETS_WITH_AVERAGE);
         BowlerCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BowlerCSV[].class);
-        Assert.assertEquals("Krishnappa Gowtham",iplCsv[iplCsv.length-1].playerNameBow);
+        Assert.assertEquals("Imran Tahir",iplCsv[iplCsv.length-1].playerNameBow);
     }
 }
