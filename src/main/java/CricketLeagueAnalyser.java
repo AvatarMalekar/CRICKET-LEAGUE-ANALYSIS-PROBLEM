@@ -8,7 +8,8 @@ public class CricketLeagueAnalyser<E> {
         BATTING,BOWLING;
     }
     public enum RecordSort{
-        AVERAGE,STRIKE_RATE,FOUR,SIX,PLAYER_NAME,FOUR_SIX_COUNT,FOUR_SIX_COUNT_WITH_AVERAGE,AVERAGE_WITH_STRIKE_RATE,RUNS_AND_AVERAGE;
+        AVERAGE,STRIKE_RATE,FOUR,SIX,PLAYER_NAME,FOUR_SIX_COUNT,FOUR_SIX_COUNT_WITH_AVERAGE,AVERAGE_WITH_STRIKE_RATE,
+        RUNS_AND_AVERAGE,STRIKE_RATE_OF_BOWLER,ECONOMY_RATE;
     }
     List<CricketLeagueDTO> iplList;
     Map<String,CricketLeagueDTO> iplMap=null;
@@ -27,7 +28,9 @@ public class CricketLeagueAnalyser<E> {
         Comparator<CricketLeagueDTO> comparatorOfRuns=Comparator.comparing(batmanCSV->batmanCSV.runs);
         this.mapOfSortValues.put(RecordSort.RUNS_AND_AVERAGE,comparatorOfRuns.thenComparing(BatsmanCSV->BatsmanCSV.battingAverage));
 
-        this.mapOfSortValues.put(RecordSort.AVERAGE,Comparator.comparing(batmanCSV->batmanCSV.bowlingAverage));
+        this.mapOfSortValues.put(RecordSort.AVERAGE,Comparator.comparing(bowlerCSV->bowlerCSV.bowlingAverage));
+        this.mapOfSortValues.put(RecordSort.STRIKE_RATE_OF_BOWLER,Comparator.comparing(bowlerCSV->bowlerCSV.strikeRateBow));
+        this.mapOfSortValues.put(RecordSort.ECONOMY_RATE,Comparator.comparing(bowlerCSV->bowlerCSV.economy));
 
     }
 

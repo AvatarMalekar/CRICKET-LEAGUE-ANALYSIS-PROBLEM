@@ -11,7 +11,7 @@ public class CricketLeagueAnalyserTest {
         cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH);
         String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.AVERAGE);
         BatsmanCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
-        Assert.assertEquals(83.2,iplCsv[iplCsv.length-1].battingAverage,0.00);
+        Assert.assertEquals("Shreyas Iyer",iplCsv[iplCsv.length-1].playerName);
     }
 
     @Test
@@ -64,6 +64,15 @@ public class CricketLeagueAnalyserTest {
         CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
         cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BOWLING,BOWLER_CSV_FILE_PATH);
         String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.AVERAGE);
+        BowlerCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BowlerCSV[].class);
+        Assert.assertEquals("Krishnappa Gowtham",iplCsv[iplCsv.length-1].playerNameBow);
+    }
+
+    @Test
+    public void givenIPLRBowlingRecordData_WhenSortedOnBasisOfStriking_Rate_ShouldReturn_PlayerName() {
+        CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
+        cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BOWLING,BOWLER_CSV_FILE_PATH);
+        String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.STRIKE_RATE_OF_BOWLER);
         BowlerCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BowlerCSV[].class);
         Assert.assertEquals("Krishnappa Gowtham",iplCsv[iplCsv.length-1].playerNameBow);
     }
