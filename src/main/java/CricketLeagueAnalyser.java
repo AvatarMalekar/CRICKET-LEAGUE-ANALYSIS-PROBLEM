@@ -9,7 +9,8 @@ public class CricketLeagueAnalyser<E> {
     }
     public enum RecordSort{
         AVERAGE,STRIKE_RATE,FOUR,SIX,PLAYER_NAME,FOUR_SIX_COUNT,FOUR_SIX_COUNT_WITH_AVERAGE,AVERAGE_WITH_STRIKE_RATE,
-        RUNS_AND_AVERAGE,STRIKE_RATE_OF_BOWLER,ECONOMY_RATE,STRIKE_RATE_WITH_FOUR_FIVE_WICKETS,AVERAGE_WITH_STRIKE_OF_BOWLERS;
+        RUNS_AND_AVERAGE,STRIKE_RATE_OF_BOWLER,ECONOMY_RATE,STRIKE_RATE_WITH_FOUR_FIVE_WICKETS,AVERAGE_WITH_STRIKE_OF_BOWLERS,
+        MOST_WICKETS_WITH_AVERAGE;
     }
     List<CricketLeagueDTO> iplList;
     Map<String,CricketLeagueDTO> iplMap=null;
@@ -34,7 +35,8 @@ public class CricketLeagueAnalyser<E> {
         this.mapOfSortValues.put(RecordSort.STRIKE_RATE_WITH_FOUR_FIVE_WICKETS,new ComparatorSortingForWicket().thenComparing(bowlerCSV->bowlerCSV.strikeRateBow));
         Comparator<CricketLeagueDTO> comparatorOfAverage=Comparator.comparing(bowlerCSV->bowlerCSV.bowlingAverage);
         this.mapOfSortValues.put(RecordSort.AVERAGE_WITH_STRIKE_OF_BOWLERS,comparatorOfAverage.thenComparing(bowlerCSV->bowlerCSV.strikeRateBow));
-
+        Comparator<CricketLeagueDTO> comparatorOfWickets=Comparator.comparing(bowlerCSV->bowlerCSV.wickets);
+        this.mapOfSortValues.put(RecordSort.MOST_WICKETS_WITH_AVERAGE,comparatorOfAverage.thenComparing(bowlerCSV->bowlerCSV.bowlingAverage));
     }
 
     public int loadIPLData(RecordType batting, String csvFilePath) {
