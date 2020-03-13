@@ -5,6 +5,7 @@ public class CricketLeagueDTO {
     public int sixCount;
     public String playerName;
     public int runs;
+    public int mostWicket;
 
     public double bowlingAverage;
     public double strikeRateBow;

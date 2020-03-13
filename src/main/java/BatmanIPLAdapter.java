@@ -1,6 +1,5 @@
 import censusanalyser.CSVBuilderFactory;
 import censusanalyser.ICSVBuilder;
-import com.opencsv.bean.CsvToBean;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -22,16 +21,17 @@ public class BatmanIPLAdapter extends IPLAdapter{
         return this.loadIPLData(iplMap,csvFilePath[1]);
     }
     private Map<String, CricketLeagueDTO> loadIPLData(Map<String, CricketLeagueDTO> iplMap, String path) {
-        CsvToBean<CricketLeagueDTO> csvToBean;
         try(Reader reader = Files.newBufferedReader(Paths.get(path));) {
             ICSVBuilder icsvBuilder= CSVBuilderFactory.createBuilder();
             Iterator<BowlerCSV> codeIterator=icsvBuilder.getCSVIterator(reader,BowlerCSV.class);
             Iterable<BowlerCSV> iplNameCSV= ()-> codeIterator;
             StreamSupport.stream(iplNameCSV.spliterator(),false)
-                    .filter(iplNameCsv -> iplMap.get(iplNameCsv)!=null)
-                    .forEach(code-> iplMap.get(code).playerName=code.playerNameBow);
+                    .filter(iplNameCsv -> iplMap.get(iplNameCsv.playerNameBow)!=null)
+                    .forEach(code-> {
+                        iplMap.get(code.playerNameBow).bowlingAverage = code.bowlingAverage;
+                        iplMap.get(code.playerNameBow).mostWicket=code.wickets;
+                    });
             return iplMap;
-
         } catch (IOException e) {
             throw new CricketLeagueAnalyserException(e.getMessage(),
                     CricketLeagueAnalyserException.ExceptionType.IPL_FILE_PROBLEM);

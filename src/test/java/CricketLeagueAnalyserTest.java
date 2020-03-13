@@ -1,13 +1,21 @@
 import com.google.gson.Gson;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CricketLeagueAnalyserTest {
     private static final String BATSMAN_CSV_FILE_PATH ="./src/test/resources/IPL2019FactsheetMostRuns.csv";
     private static final String BOWLER_CSV_FILE_PATH ="./src/test/resources/IPL2019FactsheetMostWkts.csv";
+
+    CricketLeagueAnalyser cricketLeagueAnalyser;
+    @Before
+    public void setUp() throws Exception {
+        cricketLeagueAnalyser=new CricketLeagueAnalyser();
+    }
+
     @Test
     public void givenIPLRecordData_WhenSortedOnAvg_ShouldReturnSortedResult() {
-        CricketLeagueAnalyser cricketLeagueAnalyser=new CricketLeagueAnalyser();
+
         cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH);
         String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.AVERAGE);
         BatsmanCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
@@ -119,6 +127,14 @@ public class CricketLeagueAnalyserTest {
         cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH,BOWLER_CSV_FILE_PATH);
         String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.BEST_AVERAGE_ALLROUNDER);
         BatsmanCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
-        Assert.assertEquals("Marcus Stoinis",iplCsv[iplCsv.length-1].playerName);
+        Assert.assertEquals("Krishnappa Gowtham",iplCsv[iplCsv.length-1].playerName);
+    }
+
+    @Test
+    public void givenIPLbowling_And_Batting_RecordData_WhenSortedOnBasisOfRunsAndWickets_ShouldReturnPlayerName() {
+        cricketLeagueAnalyser.loadIPLData(CricketLeagueAnalyser.RecordType.BATTING,BATSMAN_CSV_FILE_PATH,BOWLER_CSV_FILE_PATH);
+        String sortedIPLData=cricketLeagueAnalyser.getSortedIPLData(CricketLeagueAnalyser.RecordSort.ALLROUNDER);
+        BatsmanCSV[] iplCsv=new Gson().fromJson(sortedIPLData,BatsmanCSV[].class);
+        Assert.assertEquals("Hardik Pandya",iplCsv[iplCsv.length-1].playerName);
     }
 }

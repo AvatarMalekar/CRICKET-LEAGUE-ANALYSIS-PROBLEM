@@ -4,7 +4,7 @@ public class ComparatorSortingForBestAverageOfAllrounder implements Comparator<C
 
     @Override
     public int compare(CricketLeagueDTO v1, CricketLeagueDTO v2) {
-        double i=(v1.battingAverage+v2.bowlingAverage);
+        double i=(v1.battingAverage+v1.bowlingAverage)-(v2.battingAverage+v2.bowlingAverage);
         return (int)i;
     }
 }
